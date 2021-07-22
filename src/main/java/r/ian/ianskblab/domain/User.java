@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.UUID;
 
 /**
@@ -14,6 +15,7 @@ import java.util.UUID;
  * @since 21.07.2021
  */
 @Entity
+@Table(name = "user_t")
 @Data
 public class User {
 
