@@ -1,4 +1,4 @@
-package r.ian.ianskblab.listener;
+package r.ian.ianlabtest.listener;
 
 import org.springframework.messaging.Message;
 

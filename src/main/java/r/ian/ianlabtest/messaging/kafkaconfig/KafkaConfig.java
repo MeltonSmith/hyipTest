@@ -1,4 +1,4 @@
-package r.ian.ianskblab.messaging.kafkaconfig;
+package r.ian.ianlabtest.messaging.kafkaconfig;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;

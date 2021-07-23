@@ -1,4 +1,4 @@
-package r.ian.ianskblab.controller;
+package r.ian.ianlabtest.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

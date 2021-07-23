@@ -1,9 +1,4 @@
-package r.ian.ianskblab.stub;
-
-import org.springframework.messaging.Message;
-import r.ian.ianskblab.service.MessagingService;
-
-import java.util.concurrent.TimeoutException;
+package r.ian.ianlabtest.stub;
 
 /**
  * @author Melton Smith

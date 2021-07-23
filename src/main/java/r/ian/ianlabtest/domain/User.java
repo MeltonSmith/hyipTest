@@ -1,4 +1,4 @@
-package r.ian.ianskblab.domain;
+package r.ian.ianlabtest.domain;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;

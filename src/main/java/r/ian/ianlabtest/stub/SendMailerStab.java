@@ -1,9 +1,7 @@
-package r.ian.ianskblab.stub;
+package r.ian.ianlabtest.stub;
 
-import lombok.SneakyThrows;
 //import r.ian.ianskblab.service.SendMailer;
 
-import java.util.concurrent.TimeUnit;
 
 /**
  * TODO make a separate micro service through kafka
