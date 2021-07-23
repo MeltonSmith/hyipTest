@@ -1,6 +1,7 @@
-package r.ian.ianlabtest.domain;
+package r.ian.ianlabtest.data.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
@@ -8,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 /**
@@ -17,10 +20,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "user_t")
 @Data
+@EqualsAndHashCode
 public class User {
-
-    public User() {
-    }
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -28,15 +29,25 @@ public class User {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-
-//    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Length(min = 6, max = 20)
+    @NotBlank
     private String login;
 
-    @Length(min = 7, max = 20)
+    @NotBlank
     private String password;
+
+    @NotBlank
+    private String firstName;
+
+    @NotBlank
+    private String secondName;
+
+    @NotBlank
+    private String middleName;
+
+    @Email
+    private String email;
 
 
 }

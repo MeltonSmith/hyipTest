@@ -6,37 +6,38 @@
     </head>
     <body>
         <div class="jumbotron jumbotron-fluid bg-light mb-0 p-3">
-            <form class="container" th:action="@{/registration}" method="post" style="width: 20%">
+            <form class="container" th:action="@{/registration}" th:object="${userDTO}" method="post" style="width: 20%">
 <!--                <div th:if="${param.error}">-->
 <!--                    Invalid username and password.-->
 
+
                     <div class="form-group">
                         <label for="login">Login:</label>
-                        <input type="email" class="form-control shadow" placeholder="Enter a desired login" id="login">
+                        <input type="text" th:field="*{login}" class="form-control shadow" placeholder="Enter a desired login" id="login">
                     </div>
                     <div class="form-group">
                         <label for="pwd">Password:</label>
-                        <input type="password" class="form-control shadow" placeholder="Enter password (6 characters min)" id="pwd">
+                        <input type="password" th:field="*{password}" class="form-control shadow" placeholder="Enter password (6 characters min)" id="pwd">
                     </div>
                     <div class="form-group">
                         <label for="rpwd">Repeat Password:</label>
-                        <input type="password" class="form-control shadow" placeholder="Repeat password" id="rpwd">
+                        <input type="password" th:field="*{repeatPassword}" class="form-control shadow" placeholder="Repeat password" id="rpwd">
                     </div>
                     <div class="form-group">
                         <label for="firstName">First Name:</label>
-                        <input type="email" class="form-control shadow" placeholder="Enter your name" id="firstName">
+                        <input type="text" th:field="*{firstName}" class="form-control shadow" placeholder="Enter your name" id="firstName">
                     </div>
                     <div class="form-group">
                         <label for="middleName">Middle Name:</label>
-                        <input type="email" class="form-control shadow" placeholder="Enter your middle name" id="middleName">
+                        <input type="text" th:field="*{middleName}" class="form-control shadow" placeholder="Enter your middle name" id="middleName">
                     </div>
                     <div class="form-group">
                         <label for="lastName">Last Name:</label>
-                        <input type="email" class="form-control shadow" placeholder="Enter your last name" id="lastName">
+                        <input type="text" th:field="*{secondName}" class="form-control shadow" placeholder="Enter your last name" id="lastName">
                     </div>
                     <div class="form-group">
                         <label for="email">Email address:</label>
-                        <input type="email" class="form-control shadow " placeholder="Enter email" id="email">
+                        <input type="email" th:field="*{email}" class="form-control shadow " placeholder="Enter email" id="email">
                     </div>
                     <div style="text-align: center">
                         <button type="submit" class="btn btn-primary shadow" >Submit</button>
