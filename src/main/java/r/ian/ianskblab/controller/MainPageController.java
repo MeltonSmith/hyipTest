@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainPageController {
 
+    //TODO delete
     @Value("${spring.application.name}")
     private String appName;
 

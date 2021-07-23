@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      th:fragment="layout (title, content)">
+      th:fragment="layout (content)">
 
-    <head th:replace="fragments/head :: head(${title})">
-        <title>Title</title>
+<!--    <head th:replace="fragments/head :: head(${title})">-->
+    <head th:replace="fragments/head :: head">
+<!--        <title>Title</title>-->
     </head>
     <body>
         <div th:replace="fragments/nav :: nav"></div>
 
         <div th:replace="${content}">
-            <p>Layout content</p>
+<!--            <p>Layout content</p>-->
         </div>
 
         <div th:replace="fragments/footer :: footer"></div>

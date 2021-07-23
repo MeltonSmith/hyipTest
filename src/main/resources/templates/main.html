@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="fragments/layout :: layout (~{::title}, ~{::section})">
+      th:replace="fragments/layout :: layout (~{::body})">
     <head>
-        <title>Main page</title>
+<!--        <title>Main page</title>-->
     </head>
     <body>
-        <section>
-
-            <div class="container">
-                <div class="jumbotron">
-                    <h5>
-                        SHIT
-                        <a th:href="@{/auth/register}">Регистрация</a>
-                    </h5>
+            <div class="jumbotron jumbotron-fluid" style="margin-bottom: 0" th:align="center">
+                <div class="container">
+                    <h1>Welcome!</h1>
+                    <a th:href="@{/registration}" class="btn btn-primary">Sing in</a>
+                    <a th:href="@{/registration}" class="btn btn-primary">Register</a>
                 </div>
             </div>
 
-        </section>
+<!--            <button type="submit" class="btn btn-primary">Submit</button>-->
+
+<!--            <div class="container">-->
+<!--                <div class="jumbotron jumbotron-fluid">-->
+<!--                    <h5>-->
+<!--                        <a th:href="@{/registration}">Registration</a>-->
+<!--                    </h5>-->
+<!--                </div>-->
+<!--            </div>-->
+
     </body>
 </html>

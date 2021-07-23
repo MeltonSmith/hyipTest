@@ -2,11 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       lang="en">
-<div th:fragment="footer">
-    <div class="container-fluid">
-        <footer>
-            <p class="lead">MSmith 2021</p>
-        </footer>
+    <div th:fragment="footer">
+        <div class="bg-secondary text-center">
+            <a class="text-light" href="https://github.com/MeltonSmith/">
+                <img th:src="@{/img/github.png}" width="25">
+                Made by Melton Smith, 2021
+            </a>
+        </div>
     </div>
-</div>
 </html>
