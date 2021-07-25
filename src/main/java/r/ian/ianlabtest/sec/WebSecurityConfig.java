@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 
 /**
  * @author Melton Smith
@@ -36,10 +37,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .formLogin()
                     .loginPage("/main")
+                    .loginProcessingUrl("/main")
                     .permitAll()
-//                .usernameParameter("login")
-//                .passwordParameter("pwd")
-//                .defaultSuccessUrl("/registration")
+                    .usernameParameter("login")
+                    .passwordParameter("password")
+                    .defaultSuccessUrl("/registration")
                     .and()
                 .logout()
                     .permitAll()
@@ -53,19 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers("/h2/**");
     }
-
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails userDetails =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("password")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(userDetails);
-//    }
 
 
 //    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {

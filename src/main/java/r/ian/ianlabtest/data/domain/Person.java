@@ -1,6 +1,9 @@
 package r.ian.ianlabtest.data.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,7 +17,9 @@ import java.util.UUID;
  */
 
 @Entity
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Person {
 
     @Id

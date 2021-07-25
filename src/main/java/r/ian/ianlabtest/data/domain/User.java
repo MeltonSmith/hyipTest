@@ -2,6 +2,8 @@ package r.ian.ianlabtest.data.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +19,8 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "user_t")
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode
 public class User implements UserDetails {
 
@@ -53,7 +56,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override

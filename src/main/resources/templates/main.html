@@ -9,14 +9,18 @@
                 <div class="container">
                     <h1>Welcome!</h1>
 
+                    <div th:if="${param.error}" class="alert alert-error">
+                        Invalid username and password.
+                    </div>
+
                     <form class="container" th:action="@{/main}" method="post" style="width: 20%; margin-bottom: 2px">
                         <div class="form-group">
 <!--                            <label for="login">Login:</label>-->
-                            <input type="text" class="form-control shadow" placeholder="Login" id="login">
+                            <input type="text" class="form-control shadow" name="login" placeholder="Login" id="login">
                         </div>
                         <div class="form-group">
 <!--                            <label for="pwd">Password:</label>-->
-                            <input type="password" class="form-control shadow" placeholder="Password" id="pwd">
+                            <input type="password" class="form-control shadow" name="password" placeholder="Password" id="password">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary shadow" type="submit">Sign in</button>

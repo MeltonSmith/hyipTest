@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author Melton Smith
@@ -21,10 +20,5 @@ public class MainPageController {
     public String handle(Model model) {
         model.addAttribute("appName", appName);
         return "main";
-    }
-
-    @PostMapping(value ={"/main"})
-    public void postLogin(Model model) {
-        System.out.println("A");
     }
 }
