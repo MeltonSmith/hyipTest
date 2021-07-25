@@ -7,7 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import r.ian.ianlabtest.data.dto.UserDTO;
+import r.ian.ianlabtest.data.dto.UserInfoDTO;
 import r.ian.ianlabtest.service.UserService;
 
 /**
@@ -27,18 +27,18 @@ public class RegistrationController {
 
     @GetMapping
     public String handle(Model model) {
-        model.addAttribute("userDTO", new UserDTO());
+        model.addAttribute("userInfoDTO", new UserInfoDTO());
         return "auth/registration";
     }
 
     @PostMapping
-    public String register(UserDTO userDTO, Model model, BindingResult result) {
+    public String register(UserInfoDTO userInfoDTO, Model model, BindingResult result) {
         if (result.hasErrors()){
             model.addAttribute("errorMessage", "ALLE.");
             return "/main";
         }
 
-        userService.registerUserFromDTO(userDTO);
+        userService.registerUserFromDTO(userInfoDTO);
         return "redirect:/main";
     }
 }

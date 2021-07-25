@@ -17,13 +17,13 @@ public class MainPageController {
     @Value("${spring.application.name}")
     private String appName;
 
-    @GetMapping(value ={"/main", "/"})
+    @GetMapping(value ={"/main"})
     public String handle(Model model) {
         model.addAttribute("appName", appName);
         return "main";
     }
 
-    @PostMapping(value ={"/main", "/"})
+    @PostMapping(value ={"/main"})
     public void postLogin(Model model) {
         System.out.println("A");
     }

@@ -3,7 +3,8 @@ package r.ian.ianlabtest.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import r.ian.ianlabtest.data.dto.UserDTO;
+import r.ian.ianlabtest.data.dto.UserInfoDTO;
+import r.ian.ianlabtest.data.repo.PersonRepo;
 import r.ian.ianlabtest.data.repo.UserRepo;
 
 /**
@@ -13,21 +14,22 @@ import r.ian.ianlabtest.data.repo.UserRepo;
 @Service
 public class UserService {
 
-    private final UserRepo userRepo;
+//    private final UserRepo userRepo;
+    private final PersonRepo personRepo;
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
-        this.userRepo = userRepo;
+    public UserService(PersonRepo personRepo, PasswordEncoder passwordEncoder) {
+        this.personRepo = personRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
     //TODO
 //    @Transactional
-    public void registerUserFromDTO(UserDTO userDTO){
-        String encoded = passwordEncoder.encode(userDTO.getPassword());
-        userDTO.setPassword(encoded);
-        userRepo.save(userDTO.toUser());
+    public void registerUserFromDTO(UserInfoDTO userInfoDTO){
+        String encoded = passwordEncoder.encode(userInfoDTO.getPassword());
+        userInfoDTO.setPassword(encoded);
+        personRepo.save(userInfoDTO.toUser().getPerson());
     }
 }

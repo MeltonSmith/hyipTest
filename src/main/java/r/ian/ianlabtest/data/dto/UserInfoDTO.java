@@ -3,6 +3,7 @@ package r.ian.ianlabtest.data.dto;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import r.ian.ianlabtest.data.constraint.FieldMatch;
+import r.ian.ianlabtest.data.domain.Person;
 import r.ian.ianlabtest.data.domain.User;
 
 import javax.validation.constraints.Email;
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 @FieldMatch(first = "password", second = "password", message = "passwords do not match")
-public class UserDTO {
+public class UserInfoDTO {
 
     @Length(min = 6, max = 20)
     private String login;
@@ -41,10 +42,20 @@ public class UserDTO {
         User user = new User();
         user.setLogin(login);
         user.setPassword(password);
-        user.setFirstName(firstName);
-        user.setSecondName(secondName);
-        user.setMiddleName(middleName);
-        user.setEmail(email);
+
+        Person person = new Person();
+        person.setFirstName(firstName);
+        person.setSecondName(secondName);
+        person.setMiddleName(middleName);
+        person.setEmail(email);
+        person.setUser(user);
+
+        user.setPerson(person);
+
+//        user.setFirstName(firstName);
+//        user.setSecondName(secondName);
+//        user.setMiddleName(middleName);
+//        user.setEmail(email);
 
         return user;
     }
