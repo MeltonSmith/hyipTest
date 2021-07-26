@@ -15,13 +15,12 @@ import r.ian.ianlabtest.data.repo.UserRepo;
 @Service
 public class CustomUserDetailsManager implements UserDetailsManager {
 
-    @Autowired
     UserRepo userRepo;
 
-//    @Autowired
-//    public CustomUserDetailsManager(UserRepo userRepo) {
-//        this.userRepo = userRepo;
-//    }
+    @Autowired
+    public CustomUserDetailsManager(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @Override
     public void createUser(UserDetails details) {

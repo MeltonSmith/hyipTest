@@ -5,8 +5,19 @@
     <nav class="navbar navbar-expand-sm bg-secondary navbar-dark sticky-top font-weight-bold shadow-lg" th:fragment="nav">
         <div class="container-fluid">
             <a class="navbar-brand" href="/main">
-                <img src="/static/img/kafka-icon.png" th:src="@{/img/kafka-icon.png}" alt="" class="d-inline-block" width="40"> Lab test
+                <img src="/static/img/kafka-icon.png" th:src="@{/img/kafka-icon.png}" alt="" class="d-inline-block" width="30"> Lab test
             </a>
+            <div th:if="${fullName}">
+                <ul class="navbar-nav">
+                    <div class="spinner-border"></div>
+                    <a class="nav-link" th:text="${fullName}" href="#"></a>
+                    <li class="nav-brand active">
+                        <form name="logoutForm" th:action="@{/logout}" method="post">
+                            <button class="btn btn-light shadow" type="submit">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
