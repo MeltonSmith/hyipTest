@@ -27,6 +27,6 @@ public class MainPageController {
             return "main";
         }
 
-        return "redirect:/";
+        return "redirect:/home";
     }
 }

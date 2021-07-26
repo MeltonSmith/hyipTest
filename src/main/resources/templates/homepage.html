@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/layout :: layout (~{::body})">
+
+    <body>
+
+        <div class="bg-image " style="
+              background-image: url('/img/background/tradingback.jpg');
+              background-attachment: fixed;
+              background-position: center center;
+              -webkit-background-size: cover;
+              -moz-background-size: cover;
+              background-size: cover;
+              -o-background-size: cover;
+              height: 100vh;
+            ">
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.5); height: 100vh">
+                <div class="container">
+                    <!--Grid row-->
+                    <div class="row">
+                        <!--Grid column-->
+                        <div class="col-md-6 text-light text-center text-md-left mt-xl-5 mb-5 wow fadeInLeft">
+                            <h1 class="h1-responsive font-weight-bold mt-sm-5">Trade easily with our App </h1>
+                            <hr class="hr-light">
+                            <h6 class="mb-4">We offer you a 30% profit per month. The only thing you need is to register and put
+                                at least 100$ on your account. Everything is free, reach your dreams!</h6>
+                            <a class="btn btn-outline-light text-light">Download</a>
+                            <a class="btn btn-outline-light text-light">Learn more</a>
+                        </div>
+                        <!--Grid column-->
+                        <!--Grid column-->
+                        <div class="col-md-6 col-xl-5 mt-xl-5">
+<!--                            <img src="https://mdbootstrap.com/img/Mockups/Transparent/Small/admin-new.png" alt="" class="img-fluid">-->
+                                                <img th:src="@{/img/manny.png}" alt="" class="img-fluid">
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
