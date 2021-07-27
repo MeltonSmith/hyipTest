@@ -7,8 +7,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import r.ian.ianlabtest.data.dto.UserInfoDTO;
 import r.ian.ianlabtest.service.UserService;
+
+import javax.validation.Valid;
 
 /**
  * @author Melton Smith
@@ -25,19 +28,19 @@ public class RegistrationController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping()
     public String handle(Model model) {
         model.addAttribute("userInfoDTO", new UserInfoDTO());
         return "auth/registration";
     }
 
-    @PostMapping
-    public String register(UserInfoDTO userInfoDTO, Model model, BindingResult result) {
+    @PostMapping()
+    public String register(@Valid UserInfoDTO userInfoDTO, BindingResult result,  Model model, final RedirectAttributes redirectAttributes) {
         if (result.hasErrors()){
-            model.addAttribute("errorMessage", "ALLE.");
-            return "/main";
+            return "auth/registration";
         }
 
+        redirectAttributes.addFlashAttribute("successfulRegistration", "Success! You can now sign in with your credentials");
         userService.registerUserFromDTO(userInfoDTO);
         return "redirect:/main";
     }

@@ -1,5 +1,6 @@
 package r.ian.ianlabtest.sec;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,6 +14,7 @@ import r.ian.ianlabtest.data.repo.UserRepo;
  * @since 25.07.2021
  */
 @Service
+@Slf4j
 public class CustomUserDetailsManager implements UserDetailsManager {
 
     UserRepo userRepo;
@@ -49,6 +51,12 @@ public class CustomUserDetailsManager implements UserDetailsManager {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return userRepo.getByLogin(login);
+        UserDetails userDetails = userRepo.getByLogin(login);
+        if (userDetails == null){
+            log.debug("Can not authenticate");
+            throw new UsernameNotFoundException("Wrong credentials");
+        }
+
+        return userDetails;
     }
 }

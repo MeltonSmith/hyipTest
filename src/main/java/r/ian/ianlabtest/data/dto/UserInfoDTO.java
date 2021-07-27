@@ -20,10 +20,10 @@ public class UserInfoDTO {
     @Length(min = 6, max = 20)
     private String login;
 
-    @Length(min = 6, max = 20)
+    @Length(min = 7, max = 20)
     private String password;
 
-    @Length(min = 6, max = 20)
+    @Length(min = 7, max = 20)
     private String repeatPassword;
 
     @NotBlank
@@ -36,6 +36,7 @@ public class UserInfoDTO {
     private String middleName;
 
     @Email
+    @NotBlank
     private String email;
 
     public User toUser(){
@@ -51,11 +52,6 @@ public class UserInfoDTO {
         person.setUser(user);
 
         user.setPerson(person);
-
-//        user.setFirstName(firstName);
-//        user.setSecondName(secondName);
-//        user.setMiddleName(middleName);
-//        user.setEmail(email);
 
         return user;
     }

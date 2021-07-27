@@ -32,22 +32,29 @@
                         <!--Form-->
                         <div class="card wow fadeInRight text-light" style = "background-color: rgba(255,255,255,0.08)">
                             <div class="card-body">
+
+
+
+
                                 <!--Header-->
                                 <div class="text-center">
                                     <h3 class="white-text">
                                         <i class="fas fa-user white-text"></i> Log in:</h3>
                                     <hr class="hr-light">
                                 </div>
+
                                 <!--Body-->
 
                                 <form class="container" th:action="@{/main}" method="post" style="width: 80%; margin-bottom: 2px">
+                                    <div class="alert alert-danger text-center" th:if="${param.error}">Wrong login or password</div>
+                                    <div class="alert alert-success text-center" th:if="${successfulRegistration}" th:text="${successfulRegistration}"></div>
                                     <div class="md-form">
-                                        <i class="fas fa-user prefix white-text active"></i>
+<!--                                        <i class="fas fa-user prefix white-text active"></i>-->
                                         <input type="text"  name="login" id="login" class="white-text form-control">
                                         <label for="login" class="active">Your login</label>
                                     </div>
                                     <div class="md-form">
-                                        <i class="fas fa-lock prefix white-text active"></i>
+<!--                                        <i class="fas fa-lock prefix white-text active"></i>-->
                                         <input type="password"  name="password" id="password" class="white-text form-control">
                                         <label for="password">Your password</label>
                                     </div>
@@ -61,7 +68,9 @@
                             </div>
                         </div>
                         <!--/.Form-->
+
                     </div>
+
                     <!--Grid column-->
                 </div>
                 <!--Grid row-->
