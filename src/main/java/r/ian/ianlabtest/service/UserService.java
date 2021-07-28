@@ -25,28 +25,26 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final KafkaTemplate<String, String> userKafkaTemplate;
+    private final UserApprovalService userApprovalService;
 
     @Autowired
-    public UserService(CustomUserDetailsManager userDetailsManager, PasswordEncoder passwordEncoder, KafkaTemplate<String, String> userKafkaTemplate) {
+    public UserService(CustomUserDetailsManager userDetailsManager, PasswordEncoder passwordEncoder, UserApprovalService userApprovalService) {
         this.userDetailsManager = userDetailsManager;
         this.passwordEncoder = passwordEncoder;
-        this.userKafkaTemplate = userKafkaTemplate;
+        this.userApprovalService = userApprovalService;
     }
 
     /**
-     * Trying to save user and send its info in a single transaction
+     * Trying to save user and send its info in a single transaction. (works in a single transaction, blocking call of kafkaTemplate)
      */
     @SneakyThrows
     @Transactional(value = "transactionManager")
-//    @Async
     public void registerUserFromDTO(UserInfoDTO userInfoDTO){
         String encoded = passwordEncoder.encode(userInfoDTO.getPassword());
         userInfoDTO.setPassword(encoded);
         User user = userDetailsManager.createUserAndGet(userInfoDTO.toUser());
 
         //user and person share the same Id
-
-        userKafkaTemplate.send("hyipTestUser", user.getId().toString(), user.getPerson().getEmail()).get(10, TimeUnit.SECONDS);
+        userApprovalService.sendForApproval(user);
     }
 }

@@ -1,4 +1,4 @@
-package r.ian.ianlabtest.sec;
+package r.ian.ianlabtest.sec.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

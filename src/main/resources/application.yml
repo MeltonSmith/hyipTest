@@ -26,7 +26,6 @@ spring:
     producer:
       properties:
         "max.block.ms" : 10000
-        #      transaction-id-prefix: "kafka-reg-tx"
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
@@ -35,3 +34,8 @@ spring:
 
   web:
     locale: en_US
+
+logging:
+  level:
+#    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG

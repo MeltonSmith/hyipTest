@@ -18,10 +18,12 @@ import java.util.Map;
 /**
  * Forwards user to a specific page after a successful authentication.
  *
+ *
  * @author Melton Smith
  * @since 26.07.2021
  */
-@Component
+//@Component
+@Deprecated
 @Slf4j
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 

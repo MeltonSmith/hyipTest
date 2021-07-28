@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import r.ian.ianlabtest.data.domain.User;
 import r.ian.ianlabtest.data.repo.UserRepo;
 
-import java.util.UUID;
-
 /**
  * @author Melton Smith
  * @since 25.07.2021
@@ -19,7 +17,7 @@ import java.util.UUID;
 @Slf4j
 public class CustomUserDetailsManager implements UserDetailsManager {
 
-    UserRepo userRepo;
+    private final UserRepo userRepo;
 
     @Autowired
     public CustomUserDetailsManager(UserRepo userRepo) {

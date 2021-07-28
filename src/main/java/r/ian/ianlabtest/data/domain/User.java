@@ -5,11 +5,15 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import r.ian.ianlabtest.sec.role.UserRole;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
 
 /**
@@ -43,9 +47,13 @@ public class User implements UserDetails {
     @MapsId
     private Person person;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole = UserRole.REGISTERED;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singletonList(new SimpleGrantedAuthority(userRole.toString()));
     }
 
     @Override
