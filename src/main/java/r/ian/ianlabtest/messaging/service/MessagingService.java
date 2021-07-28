@@ -1,4 +1,4 @@
-package r.ian.ianlabtest.service;
+package r.ian.ianlabtest.messaging.service;
 
 /**
  * @author Melton Smith
