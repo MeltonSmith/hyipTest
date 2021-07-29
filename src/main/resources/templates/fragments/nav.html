@@ -7,10 +7,9 @@
             <a class="navbar-brand" href="/main">
                 <img src="/static/img/kafka-icon.png" th:src="@{/img/kafka-icon.png}" alt="" class="d-inline-block" width="30"> High yield investing project
             </a>
-            <div th:if="${fullName}">
+            <div th:if="${user}">
                 <ul class="navbar-nav">
-                    <div class="spinner-border"></div>
-                    <a class="nav-link" th:text="${fullName}" href="#"></a>
+                    <a class="nav-link" th:text="${user.person.fullNameTrunc}" th:href="@{/profile}"></a>
                     <li class="nav-brand active">
                         <form name="logoutForm" th:action="@{/logout}" method="post">
                             <button class="btn btn-light shadow" type="submit">Logout</button>
