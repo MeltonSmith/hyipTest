@@ -18,6 +18,8 @@ import java.util.UUID;
 @Repository
 public interface UserRepo extends CrudRepository<User, UUID> {
 
+    User getById(UUID uuid);
+
     @Query("delete from User u where u.login = :login")
     void deleteUserByLogin(@Param("login") String login);
 

@@ -44,8 +44,4 @@ public class Person {
 
     @Email
     private String email;
-
-    public String getFullNameTrunc(){
-        return secondName + " " + firstName.charAt(0) + ". " + middleName.charAt(0) +".";
-    }
 }

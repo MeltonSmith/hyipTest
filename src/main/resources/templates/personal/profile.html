@@ -29,30 +29,40 @@
                             <tbody>
                             <tr>
                                 <td>Login</td>
-                                <td th:text="${user.login}"></td>
+                                <td th:text="${userInfoDTO.login}"></td>
                             </tr>
                             <tr>
                                 <td>Email</td>
-                                <td th:text="${user.person.email}"></td>
+                                <td th:text="${userInfoDTO.email}"></td>
                             </tr>
                             <tr>
                                 <td>Name</td>
-                                <td th:text="${user.person.firstName}"></td>
+                                <td th:text="${userInfoDTO.firstName}"></td>
                             </tr>
                             <tr>
                                 <td>Second name</td>
-                                <td th:text="${user.person.secondName}"></td>
+                                <td th:text="${userInfoDTO.secondName}"></td>
                             </tr>
                             <tr>
                                 <td>Middle name</td>
-                                <td th:text="${user.person.middleName}"></td>
+                                <td th:text="${userInfoDTO.middleName}"></td>
                             </tr>
                             <tr>
                                 <td>Account status</td>
-                                <td>
-                                    <div>
+                                <td th:switch="${userInfoDTO.userRole.toString}">
+                                    <div th:case="'Registered'">
+                                         <div class="spinner-border spinner-border-sm text-warning"></div>
+                                         <div class="bg-warning text-dark" style="display: inline; text-align: center" th:text="${userInfoDTO.userRole.title}"></div>
+                                    </div>
+                                    <div th:case="'Sent'">
                                         <div class="spinner-border spinner-border-sm text-primary"></div>
-                                        <div style="display: inline; text-align: center" th:text="${user.userRole}"></div>
+                                        <div class="bg-info text-dark" style="display: inline; text-align: center;" th:text="${userInfoDTO.userRole.title}"></div>
+                                    </div>
+                                    <div th:case="'Approved'">
+                                        <div class="bg-success" style="display: inline; text-align: center" th:text="${userInfoDTO.userRole.title}"></div>
+                                    </div>
+                                    <div th:case="'Rejected'">
+                                        <div class="bg-danger" style="display: inline; text-align: center" th:text="${userInfoDTO.userRole.title}"></div>
                                     </div>
                                 </td>
                             </tr>

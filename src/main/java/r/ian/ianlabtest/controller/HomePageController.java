@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import r.ian.ianlabtest.controller.abstractcontroller.BaseAuthorizedController;
+import r.ian.ianlabtest.data.repo.UserRepo;
 import r.ian.ianlabtest.sec.AuthenticationFacade;
 
 /**
@@ -16,22 +17,14 @@ import r.ian.ianlabtest.sec.AuthenticationFacade;
 @RequestMapping("/home")
 public class HomePageController extends BaseAuthorizedController {
 
-//    private final AuthenticationFacade authenticationFacade;
-
     @Autowired
-    public HomePageController(AuthenticationFacade authenticationFacade) {
-        super(authenticationFacade);
-//        this.authenticationFacade = authenticationFacade;
+    public HomePageController(AuthenticationFacade authenticationFacade, UserRepo userRepo) {
+        super(authenticationFacade, userRepo);
     }
-
 
     @GetMapping
     public String getHandle(Model model) {
         super.prepare(model);
-
-//        User user = (User) authenticationFacade.getAuthentication().getPrincipal();
-//        model.addAttribute("user", user);
-
         return "homepage";
     }
 }

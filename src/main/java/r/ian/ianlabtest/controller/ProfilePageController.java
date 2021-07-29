@@ -5,7 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import r.ian.ianlabtest.controller.abstractcontroller.BaseAuthorizedController;
+import r.ian.ianlabtest.data.domain.User;
+import r.ian.ianlabtest.data.dto.UserInfoDTO;
+import r.ian.ianlabtest.data.repo.UserRepo;
 import r.ian.ianlabtest.sec.AuthenticationFacade;
+
+import java.util.Objects;
 
 /**
  * @author Melton Smith
@@ -14,22 +19,14 @@ import r.ian.ianlabtest.sec.AuthenticationFacade;
 @Controller
 public class ProfilePageController extends BaseAuthorizedController {
 
-//    private final AuthenticationFacade authenticationFacade;
-
     @Autowired
-    public ProfilePageController(AuthenticationFacade authenticationFacade) {
-        super(authenticationFacade);
-//        this.authenticationFacade = authenticationFacade;
+    public ProfilePageController(AuthenticationFacade authenticationFacade, UserRepo userRepo) {
+        super(authenticationFacade, userRepo);
     }
 
     @GetMapping(value = "/profile")
     public String getHandle(Model model){
-//        Authentication authentication = authenticationFacade.getAuthentication();
         super.prepare(model);
-
-//        User user = (User) authentication.getPrincipal();
-//        model.addAttribute("user", user);
-
         return "personal/profile";
     }
 }
