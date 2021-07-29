@@ -3,6 +3,7 @@ package r.ian.ianlabtest.messaging.kafkaconfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.config.TopicBuilder;
 
 /**
@@ -10,11 +11,11 @@ import org.springframework.kafka.config.TopicBuilder;
  * @since 21.07.2021
  */
 @Configuration
+@Profile("kafka")
 public class KafkaConfig {
 
     //NOTE no need I use boot. I guess it's all done by .yml file
     //there should be KafkaAdmin and KafkaTXManager when coding without boot
-
 
     @Bean
     public NewTopic skbTestUser() {

@@ -40,8 +40,8 @@ public class RegistrationController {
             return "auth/registration";
         }
 
-        redirectAttributes.addFlashAttribute("successfulRegistration", "Success! You can now sign in with your credentials");
         userService.registerUserFromDTO(userInfoDTO);
+        redirectAttributes.addFlashAttribute("successfulRegistration", "Success! You can now sign in with your credentials");
         return "redirect:/main";
     }
 }

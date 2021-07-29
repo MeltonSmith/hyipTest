@@ -1,0 +1,12 @@
+spring:
+
+  kafka:
+#    kafka on my macbook
+    bootstrap-servers: '192.168.1.129:9094'
+    consumer:
+      enable-auto-commit: true
+    producer:
+      properties:
+        "max.block.ms" : 10000
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer

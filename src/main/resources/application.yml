@@ -1,7 +1,7 @@
 spring:
 
   application:
-    name: Spring boot skb
+    name: Spring boot hyip project
 
   datasource:
     driver-class-name: org.h2.Driver
@@ -18,16 +18,6 @@ spring:
     console:
       enabled: true
       path: /h2
-
-  kafka:
-    bootstrap-servers: '192.168.1.129:9094'
-    consumer:
-      enable-auto-commit: true
-    producer:
-      properties:
-        "max.block.ms" : 10000
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
   thymeleaf:
     cache: false

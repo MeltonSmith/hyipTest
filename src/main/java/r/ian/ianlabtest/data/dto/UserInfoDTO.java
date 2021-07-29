@@ -10,6 +10,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 /**
+ * TODO custom validator seems to be broken
+ *
  * @author Melton Smith
  * @since 23.07.2021
  */
