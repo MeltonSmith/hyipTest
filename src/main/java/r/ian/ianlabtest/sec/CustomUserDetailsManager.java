@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 import r.ian.ianlabtest.data.domain.User;
 import r.ian.ianlabtest.data.repo.UserRepo;
 
+import java.util.Collection;
+
+import static r.ian.ianlabtest.sec.role.UserRole.REGISTERED;
+
 /**
  * @author Melton Smith
  * @since 25.07.2021
@@ -44,9 +48,7 @@ public class CustomUserDetailsManager implements UserDetailsManager {
     }
 
     @Override
-    public void changePassword(String oldPassword, String newPassword) {
-        //TODO notImplemented
-    }
+    public void changePassword(String oldPassword, String newPassword) { }
 
     @Override
     public boolean userExists(String login) {
@@ -62,5 +64,12 @@ public class CustomUserDetailsManager implements UserDetailsManager {
         }
 
         return userDetails;
+    }
+
+    /**
+     * Takes users which are unsent to kafka after registration
+     */
+    public Collection<User> getUnsent(){
+        return userRepo.getByRole(REGISTERED);
     }
 }

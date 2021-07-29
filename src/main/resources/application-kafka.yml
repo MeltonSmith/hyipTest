@@ -7,6 +7,7 @@ spring:
       enable-auto-commit: true
     producer:
       properties:
+#        how long producer will block the thread
         "max.block.ms" : 10000
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer

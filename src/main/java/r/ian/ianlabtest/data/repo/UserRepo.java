@@ -6,7 +6,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 import r.ian.ianlabtest.data.domain.User;
+import r.ian.ianlabtest.sec.role.UserRole;
 
+import java.util.Collection;
 import java.util.UUID;
 
 /**
@@ -24,4 +26,7 @@ public interface UserRepo extends CrudRepository<User, UUID> {
 
     @Query("select u from User u where u.login = :login")
     UserDetails getByLogin(String login);
+
+    @Query("select u from User u where u.userRole = :role")
+    Collection<User> getByRole(UserRole role);
 }

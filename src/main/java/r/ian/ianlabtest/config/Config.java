@@ -1,8 +1,6 @@
 package r.ian.ianlabtest.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import r.ian.ianlabtest.sec.CustomUserDetailsManager;
 import r.ian.ianlabtest.service.UserService;
@@ -13,8 +11,8 @@ import r.ian.ianlabtest.service.UserService;
  * @author Melton Smith
  * @since 29.07.2021
  */
-@Configuration
-@Profile("default")
+//@Configuration
+//@Profile("default")
 public class Config {
 
     @Bean
