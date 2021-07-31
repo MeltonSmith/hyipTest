@@ -46,7 +46,7 @@ public class UserApprovalService {
     @Async
     public void sendForApproval(User user){
         try {
-            kafkaTemplate.send("hyipTestUser", user.getId().toString() ,Timestamp.from(Instant.now()).toString()).get(10, TimeUnit.SECONDS);
+            kafkaTemplate.send("userForApproval", user.getId().toString() ,Timestamp.from(Instant.now()).toString()).get(10, TimeUnit.SECONDS);
         } catch (Exception e) {
             log.error("Couldn't send message to messaging system");
             throw new RuntimeException(e);

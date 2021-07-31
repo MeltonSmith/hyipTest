@@ -4,6 +4,7 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.TopicBuilder;
 
 /**
@@ -12,15 +13,25 @@ import org.springframework.kafka.config.TopicBuilder;
  */
 @Configuration
 @Profile("kafka")
+@EnableKafka
 public class KafkaConfig {
 
     //NOTE no need I use boot. I guess it's all done by .yml file
     //there should be KafkaAdmin and KafkaTXManager when coding without boot
 
     @Bean
-    public NewTopic skbTestUser() {
-        return TopicBuilder.name("hyipTestUser")
+    public NewTopic userSentForApproval() {
+        return TopicBuilder.name("userForApproval")
                 .partitions(1) //I can omit it since 2.4.0
+                .replicas(1)
+                .compact()
+                .build();
+    }
+
+    @Bean
+    public NewTopic processedUsers() {
+        return TopicBuilder.name("processedUsers")
+                .partitions(1)
                 .replicas(1)
                 .compact()
                 .build();

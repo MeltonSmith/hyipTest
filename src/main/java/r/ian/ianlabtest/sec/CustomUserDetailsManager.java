@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import r.ian.ianlabtest.data.domain.User;
 import r.ian.ianlabtest.data.repo.UserRepo;
 
+import java.math.BigInteger;
 import java.util.Collection;
+import java.util.UUID;
 
 import static r.ian.ianlabtest.sec.role.UserRole.REGISTERED;
 
@@ -40,6 +42,19 @@ public class CustomUserDetailsManager implements UserDetailsManager {
     @Override
     public void updateUser(UserDetails details) {
         userRepo.save(((User) details));
+    }
+
+    public User getUserById(String id) {
+
+        UUID uuid = new UUID(
+                new BigInteger(id.substring(0, 16), 16).longValue(),
+                new BigInteger(id.substring(16), 16).longValue());
+
+        return this.getUserById(uuid);
+    }
+
+    public User getUserById(UUID id) {
+        return userRepo.getById(id);
     }
 
     @Override
