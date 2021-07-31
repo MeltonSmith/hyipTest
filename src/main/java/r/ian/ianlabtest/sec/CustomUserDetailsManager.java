@@ -45,6 +45,10 @@ public class CustomUserDetailsManager implements UserDetailsManager {
     }
 
     public User getUserById(String id) {
+        return this.getUserById(UUID.fromString(id));
+    }
+
+    public User getUserByIdWithoutDelimiters(String id) {
 
         UUID uuid = new UUID(
                 new BigInteger(id.substring(0, 16), 16).longValue(),
