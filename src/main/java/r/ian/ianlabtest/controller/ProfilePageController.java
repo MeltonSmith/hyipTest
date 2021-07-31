@@ -1,6 +1,7 @@
 package r.ian.ianlabtest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import r.ian.ianlabtest.data.dto.UserInfoDTO;
 import r.ian.ianlabtest.data.repo.UserRepo;
 import r.ian.ianlabtest.sec.AuthenticationFacade;
 
+import java.security.Principal;
 import java.util.Objects;
 
 /**
@@ -21,12 +23,12 @@ public class ProfilePageController extends BaseAuthorizedController {
 
     @Autowired
     public ProfilePageController(AuthenticationFacade authenticationFacade, UserRepo userRepo) {
-        super(authenticationFacade, userRepo);
+        super(userRepo);
     }
 
     @GetMapping(value = "/profile")
-    public String getHandle(Model model){
-        super.prepare(model);
+    public String getHandle(Model model, Principal principal){
+        super.prepare(model, principal);
         return "personal/profile";
     }
 }
