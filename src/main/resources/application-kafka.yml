@@ -20,3 +20,8 @@ spring:
       enable-auto-commit: true
       client-id: hyipConsumer
       group-id: hyip-group
+
+    #topic to send users for approval
+    approvalTopic: userForApproval
+    #topic where to get confirmation from
+    processedTopic: processedUsers

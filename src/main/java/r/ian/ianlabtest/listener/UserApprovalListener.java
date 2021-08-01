@@ -3,6 +3,8 @@ package r.ian.ianlabtest.listener;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,8 @@ import r.ian.ianlabtest.sec.role.UserRole;
  */
 @Slf4j
 @Service
-@KafkaListener(topics = "processedUsers")
+@Profile("kafka")
+@KafkaListener(topics = "#{'${spring.kafka.processedTopic}'}")
 @Transactional
 public class UserApprovalListener implements MessageListener<ConsumerRecord<String, String>>{
 

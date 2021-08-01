@@ -3,6 +3,7 @@ package r.ian.ianlabtest.service;
 import com.sun.security.auth.module.UnixSystem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
@@ -29,6 +30,9 @@ import java.util.concurrent.TimeUnit;
 @Profile("kafka")
 public class UserApprovalService {
 
+    @Value("${spring.kafka.approvalTopic}")
+    private String approvalTopic;
+
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final CustomUserDetailsManager customUserDetailsManager;
 
@@ -46,7 +50,7 @@ public class UserApprovalService {
     @Async
     public void sendForApproval(User user){
         try {
-            kafkaTemplate.send("userForApproval", user.getId().toString() ,Timestamp.from(Instant.now()).toString()).get(10, TimeUnit.SECONDS);
+            kafkaTemplate.send(approvalTopic, user.getId().toString() ,Timestamp.from(Instant.now()).toString()).get(10, TimeUnit.SECONDS);
         } catch (Exception e) {
             log.error("Couldn't send message to messaging system");
             throw new RuntimeException(e);

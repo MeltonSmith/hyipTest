@@ -16,12 +16,10 @@ import java.util.Objects;
  * @since 29.07.2021
  */
 public abstract class BaseAuthorizedController {
-//    protected final AuthenticationFacade authenticationFacade;
     protected final UserRepo userRepo;
 
     @Autowired
     protected BaseAuthorizedController(UserRepo userRepo) {
-//        this.authenticationFacade = authenticationFacade;
         this.userRepo = userRepo;
     }
 
