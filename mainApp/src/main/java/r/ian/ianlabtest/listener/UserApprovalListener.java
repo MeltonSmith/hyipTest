@@ -31,6 +31,7 @@ public class UserApprovalListener implements MessageListener<ConsumerRecord<Stri
     }
 
     @KafkaHandler(isDefault = true)
+    //TODO make transaction
     public void listen(ConsumerRecord<String, String> record) {
         String messageValue = record.value();
         String messageKey = record.key();

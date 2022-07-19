@@ -1,16 +1,20 @@
 package r.ian.ianlabtest.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.kafka.core.KafkaFailureCallback;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.concurrent.ListenableFuture;
 import r.ian.ianlabtest.data.domain.User;
 import r.ian.ianlabtest.sec.CustomUserDetailsManager;
 import r.ian.ianlabtest.sec.role.UserRole;
@@ -42,24 +46,27 @@ public class UserApprovalService {
     }
 
     /**
-     * I left deliberately left annotations in place.
-     * Just in case If I want to use it separately
+     * Non-blocking send for approval for each new user
      */
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    @Async
     public void sendForApproval(User user){
-        try {
-            kafkaTemplate.send(approvalTopic, user.getId().toString() ,Timestamp.from(Instant.now()).toString()).get(10, TimeUnit.SECONDS);
-        } catch (Exception e) {
-            log.error("Couldn't send message to messaging system");
-            throw new RuntimeException(e);
-        }
-        user.setUserRole(UserRole.SENT);
-        customUserDetailsManager.updateUser(user);
+        String uuid = user.getId().toString();
+        var future = kafkaTemplate.send(approvalTopic, uuid, uuid);
+
+        future.addCallback(result -> {
+                    user.setUserRole(UserRole.SENT);
+                    customUserDetailsManager.updateUser(user);
+                },
+                (KafkaFailureCallback<Integer, String>) ex -> {
+                    ProducerRecord<Object, Object> failedProducerRecord = ex.getFailedProducerRecord();
+                    log.error("Couldn't send message to approval system, the record key is "
+                            + failedProducerRecord.key()
+                            + ", value: " + failedProducerRecord.value());
+                }
+        );
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
-    @Async
+    @Transactional(propagation = Propagation.REQUIRES_NEW,
+            isolation = Isolation.READ_COMMITTED)
     @Scheduled(fixedDelay = 60000, initialDelay = 5000)
     public void sendForApproval(){
         Collection<User> unsent = customUserDetailsManager.getUnsent();

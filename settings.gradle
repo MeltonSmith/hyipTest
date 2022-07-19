@@ -1,3 +1,4 @@
 rootProject.name = 'hyip'
 include 'mainApp'
+include 'roleAssigner'
 
