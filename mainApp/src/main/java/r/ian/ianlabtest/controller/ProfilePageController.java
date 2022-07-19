@@ -1,18 +1,14 @@
 package r.ian.ianlabtest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import r.ian.ianlabtest.controller.abstractcontroller.BaseAuthorizedController;
-import r.ian.ianlabtest.data.domain.User;
-import r.ian.ianlabtest.data.dto.UserInfoDTO;
 import r.ian.ianlabtest.data.repo.UserRepo;
 import r.ian.ianlabtest.sec.AuthenticationFacade;
 
 import java.security.Principal;
-import java.util.Objects;
 
 /**
  * @author Melton Smith

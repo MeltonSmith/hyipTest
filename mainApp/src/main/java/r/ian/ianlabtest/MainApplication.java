@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories
 @EnableScheduling
 @ConfigurationPropertiesScan
-public class IanLabTestApplication {
+public class MainApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext run = SpringApplication.run(IanLabTestApplication.class, args);
+        ConfigurableApplicationContext run = SpringApplication.run(MainApplication.class, args);
     }
 
 }

@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import r.ian.ianlabtest.data.domain.User;
 import r.ian.ianlabtest.data.dto.UserInfoDTO;
 import r.ian.ianlabtest.data.repo.UserRepo;
-import r.ian.ianlabtest.sec.AuthenticationFacade;
 
 import java.security.Principal;
 import java.util.Objects;
