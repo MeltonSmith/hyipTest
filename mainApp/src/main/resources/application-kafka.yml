@@ -1,0 +1,35 @@
+spring:
+
+  kafka:
+#    kafka on my macbook
+    bootstrap-servers: 'localhost:9094'
+    producer:
+      client-id: mainAppProducer
+#      buffer-memory : 32000000 default ok
+      acks : 1
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      transaction-id-prefix: mainAppTx-
+      properties:
+        max.block.ms: 10000
+
+    listener:
+      poll-timeout: 10000
+      concurrency: 1
+
+    consumer:
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: latest
+      enable-auto-commit: true
+      client-id: mainAppConsumer
+      group-id: hyip-group
+
+    #topic to send users for approval
+    approvalTopic: userForApproval
+    #topic where to get confirmation from
+    processedTopic: processedUsers
+
+logging:
+  level:
+    org.springframework.kafka.transaction: debug
