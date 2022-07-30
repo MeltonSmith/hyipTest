@@ -8,10 +8,12 @@ package r.ian.ianlabtest.sec.role;
  * @since 29.07.2021
  */
 public enum UserRole {
-    REGISTERED("Registered", "Registered but unchecked"),
+    REGISTERED("Registered", "Registered, waiting for approval"),
     SENT("Sent", "Sent for approval"),
-    APPROVED("Approved", "Approved profile"),
-    REJECTED("Rejected", "Rejected profile");
+    APPROVED("Approved", "Approved user"),
+    REJECTED("Rejected", "Rejected user"),
+    ADMIN("Admin", "Admin user"),
+    ANONYMOUS("Anonymous", "Anonymous profile");
 
     private final String name;
     private final String title;
