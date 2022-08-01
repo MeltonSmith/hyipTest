@@ -9,8 +9,11 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import r.ian.ianlabtest.data.domain.User;
+import r.ian.ianlabtest.data.repo.UserRepo;
 import r.ian.ianlabtest.sec.CustomUserDetailsManager;
-import r.ian.ianlabtest.sec.role.UserRole;
+import r.ian.ianlabtest.data.domain.UserStatus;
+
+import java.util.UUID;
 
 /**
  * @author Melton Smith
@@ -23,11 +26,11 @@ import r.ian.ianlabtest.sec.role.UserRole;
 @Transactional
 public class UserApprovalListener implements MessageListener<ConsumerRecord<String, String>>{
 
-    CustomUserDetailsManager customUserDetailsManager;
+    private UserRepo userRepo;
 
     @Autowired
-    public UserApprovalListener(CustomUserDetailsManager customUserDetailsManager) {
-        this.customUserDetailsManager = customUserDetailsManager;
+    public UserApprovalListener(UserRepo userRepo) {
+        this.userRepo = userRepo;
     }
 
     @KafkaHandler(isDefault = true)
@@ -38,12 +41,12 @@ public class UserApprovalListener implements MessageListener<ConsumerRecord<Stri
 
         log.debug(messageKey + " " + messageValue);
 
-        User userById = customUserDetailsManager.getUserById(messageKey);
+        User userById = userRepo.getById(UUID.fromString(messageKey));
 
         try{
-            UserRole takenRole = UserRole.valueOf(messageValue);
-            userById.setUserRole(takenRole);
-            customUserDetailsManager.updateUser(userById);
+            UserStatus takenRole = UserStatus.valueOf(messageValue);
+            userById.setUserStatus(takenRole);
+            userRepo.save(userById);
         }
         catch(IllegalArgumentException exception){
             log.error("No status for the given role {}", messageValue);

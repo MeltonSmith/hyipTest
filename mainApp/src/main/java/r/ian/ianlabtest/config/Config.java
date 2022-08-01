@@ -2,6 +2,7 @@ package r.ian.ianlabtest.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import r.ian.ianlabtest.data.repo.UserRepo;
 import r.ian.ianlabtest.sec.CustomUserDetailsManager;
 import r.ian.ianlabtest.service.UserService;
 
@@ -16,8 +17,8 @@ import r.ian.ianlabtest.service.UserService;
 public class Config {
 
     @Bean
-    public UserService userService(CustomUserDetailsManager customUserDetailsManager, PasswordEncoder passwordEncoder){
-        return new UserService(customUserDetailsManager, passwordEncoder);
+    public UserService userService(UserRepo userRepo, PasswordEncoder passwordEncoder){
+        return new UserService(userRepo, passwordEncoder);
     }
 
 }

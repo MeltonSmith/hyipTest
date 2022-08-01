@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import r.ian.ianlabtest.data.constraint.FieldMatch;
 import r.ian.ianlabtest.data.domain.Person;
 import r.ian.ianlabtest.data.domain.User;
-import r.ian.ianlabtest.sec.role.UserRole;
+import r.ian.ianlabtest.data.domain.UserStatus;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -31,7 +31,7 @@ public class UserInfoDTO {
         this.login = user.getLogin();
         this.password = user.getPassword();
         this.repeatPassword = user.getPassword();
-        this.userRole = user.getUserRole();
+        this.userStatus = user.getUserStatus();
         this.firstName = user.getPerson().getFirstName();
         this.secondName = user.getPerson().getSecondName();
         this.middleName = user.getPerson().getMiddleName();
@@ -64,14 +64,13 @@ public class UserInfoDTO {
 
     @NotNull
     @Getter
-    private UserRole userRole = UserRole.REGISTERED;
+    private UserStatus userStatus = UserStatus.REGISTERED;
 
     public User toUser(){
         User user = new User();
         user.setLogin(login);
         user.setPassword(password);
-        user.setUserRole(userRole);
-
+        user.setUserStatus(userStatus);
         Person person = new Person();
         person.setFirstName(firstName);
         person.setSecondName(secondName);

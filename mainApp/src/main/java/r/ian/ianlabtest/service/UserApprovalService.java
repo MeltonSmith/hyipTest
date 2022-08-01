@@ -7,22 +7,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.KafkaFailureCallback;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.concurrent.ListenableFuture;
 import r.ian.ianlabtest.data.domain.User;
+import r.ian.ianlabtest.data.repo.UserRepo;
 import r.ian.ianlabtest.sec.CustomUserDetailsManager;
-import r.ian.ianlabtest.sec.role.UserRole;
+import r.ian.ianlabtest.data.domain.UserStatus;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Melton Smith
@@ -37,12 +32,12 @@ public class UserApprovalService {
     private String approvalTopic;
 
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private final CustomUserDetailsManager customUserDetailsManager;
+    private final UserRepo userRepo;
 
     @Autowired
-    public UserApprovalService(KafkaTemplate<String, String> kafkaTemplate, CustomUserDetailsManager customUserDetailsManager) {
+    public UserApprovalService(KafkaTemplate<String, String> kafkaTemplate, UserRepo userRepo) {
         this.kafkaTemplate = kafkaTemplate;
-        this.customUserDetailsManager = customUserDetailsManager;
+        this.userRepo = userRepo;
     }
 
     /**
@@ -53,8 +48,8 @@ public class UserApprovalService {
         var future = kafkaTemplate.send(approvalTopic, uuid, uuid);
 
         future.addCallback(result -> {
-                    user.setUserRole(UserRole.SENT);
-                    customUserDetailsManager.updateUser(user);
+                    user.setUserStatus(UserStatus.SENT);
+                    userRepo.save(user);
                 },
                 (KafkaFailureCallback<Integer, String>) ex -> {
                     ProducerRecord<Object, Object> failedProducerRecord = ex.getFailedProducerRecord();
@@ -69,7 +64,7 @@ public class UserApprovalService {
             isolation = Isolation.READ_COMMITTED)
     @Scheduled(fixedDelay = 60000, initialDelay = 5000)
     public void sendForApproval(){
-        Collection<User> unsent = customUserDetailsManager.getUnsent();
+        Collection<User> unsent = userRepo.getByRole(UserStatus.REGISTERED);
 
         for (User user : unsent) {
             //no new transaction no async from calling here

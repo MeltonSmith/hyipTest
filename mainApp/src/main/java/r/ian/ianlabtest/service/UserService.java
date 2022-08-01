@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import r.ian.ianlabtest.data.dto.UserInfoDTO;
+import r.ian.ianlabtest.data.repo.UserRepo;
 import r.ian.ianlabtest.sec.CustomUserDetailsManager;
 
 /**
@@ -17,13 +18,13 @@ import r.ian.ianlabtest.sec.CustomUserDetailsManager;
 @Slf4j
 public class UserService {
 
-    private final CustomUserDetailsManager userDetailsManager;
+    private final UserRepo userRepo;
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(CustomUserDetailsManager userDetailsManager, PasswordEncoder passwordEncoder) {
-        this.userDetailsManager = userDetailsManager;
+    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
+        this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -35,7 +36,7 @@ public class UserService {
     public void registerUserFromDTO(UserInfoDTO userInfoDTO){
         String encoded = passwordEncoder.encode(userInfoDTO.getPassword());
         userInfoDTO.setPassword(encoded);
-        userDetailsManager.createUserAndGet(userInfoDTO.toUser());
+        userRepo.save(userInfoDTO.toUser());
 
         //user and person share the same Id, async sending to kafka
         //can be null if profile is default

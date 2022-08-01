@@ -1,7 +1,6 @@
 package r.ian.ianlabtest.sec;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,15 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import r.ian.ianlabtest.data.domain.User;
 import r.ian.ianlabtest.data.repo.UserRepo;
+import r.ian.ianlabtest.sec.exceptions.UserIsNotActivatedException;
 
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import static r.ian.ianlabtest.sec.role.UserRole.REGISTERED;
 
 /**
  * @author Melton Smith
@@ -43,7 +40,7 @@ public class CustomUserDetailsManager implements UserDetailsManager {
 
     @Override
     public void createUser(UserDetails details) {
-       createUserAndGet(details);
+        createUserAndGet(details);
     }
 
     @Override
@@ -74,7 +71,8 @@ public class CustomUserDetailsManager implements UserDetailsManager {
     }
 
     @Override
-    public void changePassword(String oldPassword, String newPassword) { }
+    public void changePassword(String oldPassword, String newPassword) {
+    }
 
     @Override
     public boolean userExists(String login) {
@@ -98,10 +96,10 @@ public class CustomUserDetailsManager implements UserDetailsManager {
         log.debug("Authenticating {}", login);
 
 //        if (new EmailValidator().isValid(login, null)) {
-            return userRepo
-                    .findUserWithAuthoritiesByLogin(login)
-                    .map(user -> createSpringSecurityUser(login, user))
-                    .orElseThrow(() -> new UsernameNotFoundException("User " + login + " was not found in the database"));
+        return userRepo
+                .findUserWithAuthoritiesByLogin(login)
+                .map(user -> createSpringSecurityUser(login, user))
+                .orElseThrow(() -> new UsernameNotFoundException("User " + login + " does not exist"));
 //        }
 
 //        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
@@ -112,22 +110,14 @@ public class CustomUserDetailsManager implements UserDetailsManager {
     }
 
     private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowercaseLogin, User user) {
-//        if (!user.isActivated()) {
-//            throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
-//        }
+        if (user.isNotActivated()) {
+            throw new UserIsNotActivatedException("User " + lowercaseLogin + " was not activated");
+        }
         List<GrantedAuthority> grantedAuthorities = user
                 .getAuthorities()
                 .stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getName()))
                 .collect(Collectors.toList());
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), grantedAuthorities);
-    }
-
-
-    /**
-     * Takes users which are unsent to kafka after registration
-     */
-    public Collection<User> getUnsent(){
-        return userRepo.getByRole(REGISTERED);
     }
 }

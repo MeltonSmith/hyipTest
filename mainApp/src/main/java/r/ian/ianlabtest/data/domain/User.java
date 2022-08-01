@@ -5,12 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import r.ian.ianlabtest.sec.role.UserRole;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -35,6 +30,7 @@ public class User {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
+//    @Column(name = "id", nullable = false)
     private UUID id;
 
     @NotBlank
@@ -49,24 +45,27 @@ public class User {
     @MapsId
     private Person person;
 
-//    @NotNull
-//    @Enumerated(EnumType.STRING)
-//    private UserRole userRole = UserRole.REGISTERED;
-
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return Collections.singletonList(new SimpleGrantedAuthority(userRole.toString()));
-//    }
-
     @JsonIgnore
     @ManyToMany
+//    @JoinTable(
+//            name = "user_authority_t",
+//            joinColumns = @JoinColumn(name = "user_uuid", referencedColumnName = "authority_t_id"))
+////            inverseJoinColumns = { @JoinColumn(name = "authority_name", referencedColumnName = "name") }
+////    )
     @JoinTable(
             name = "user_authority_t",
-            joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
-            inverseJoinColumns = { @JoinColumn(name = "authority_name", referencedColumnName = "name") }
-    )
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "name"))
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus = UserStatus.REGISTERED;
+
+    public boolean isNotActivated(){
+        return userStatus.equals(UserStatus.SENT) || userStatus.equals(UserStatus.REGISTERED);
+    }
 
 
 //    @Override
