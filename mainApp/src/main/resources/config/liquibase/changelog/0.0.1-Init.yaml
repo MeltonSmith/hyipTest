@@ -1,19 +1,29 @@
-changeSet:
-  id: init-upload
-  author: liquibase
-  changes:
-    - loadData:
-        columns:
-          - column:
-              name:  name
-              type:  varchar
-        commentLineStartsWith:  //
-        encoding:  UTF-8
-        file:  config/liquibase/data/authority.csv
-        quotchar:  ''''
-        relativeToChangelogFile:  false
-        schemaName:  public
-        separator:  ;
-        tableName:  authority_t
-        usePreparedStatements:  true
+databaseChangeLog:
+  - changeSet:
+      id: init-upload
+      author: liquibase
+      changes:
+        - createTable:
+            columns:
+            - column:
+                name: name
+                type: varchar(50)
+                constraints:
+                    primaryKey: true
+                    nullable: false
+            tableName: authority_t
+        - loadData:
+            columns:
+              - column:
+                  name:  name
+                  type:  string
+            commentLineStartsWith:  //
+            encoding:  UTF-8
+            file:  config/liquibase/data/authority.csv
+            quotchar:  ''''
+            relativeToChangelogFile:  false
+            schemaName:  public
+            separator:  ;
+            tableName:  authority_t
+            usePreparedStatements:  true
 
