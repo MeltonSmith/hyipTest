@@ -5,7 +5,6 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
-import org.springframework.kafka.core.KafkaFailureCallback;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.Async;
@@ -50,19 +49,33 @@ public class UserApprovalService {
      */
     public void sendForApproval(User user){
         String uuid = user.getId().toString();
-        var future = kafkaTemplate.send(approvalTopic, uuid, uuid);
-
-        future.addCallback(result -> {
+        var future = kafkaTemplate.send(approvalTopic, uuid, uuid)
+                .thenAccept(result -> {
                     user.setUserRole(UserRole.SENT);
                     customUserDetailsManager.updateUser(user);
-                },
-                (KafkaFailureCallback<Integer, String>) ex -> {
-                    ProducerRecord<Object, Object> failedProducerRecord = ex.getFailedProducerRecord();
-                    log.error("Couldn't send message to approval system, the record key is "
-                            + failedProducerRecord.key()
-                            + ", value: " + failedProducerRecord.value());
-                }
-        );
+                });
+
+        return;
+
+//                (KafkaFailureCallback<Integer, String>) ex -> {
+//                    ProducerRecord<Object, Object> failedProducerRecord = ex.getFailedProducerRecord();
+//                    log.error("Couldn't send message to approval system, the record key is "
+//                            + failedProducerRecord.key()
+//                            + ", value: " + failedProducerRecord.value());
+//                }
+//        );
+
+//        future.addCallback(result -> {
+//                    user.setUserRole(UserRole.SENT);
+//                    customUserDetailsManager.updateUser(user);
+//                },
+//                (KafkaFailureCallback<Integer, String>) ex -> {
+//                    ProducerRecord<Object, Object> failedProducerRecord = ex.getFailedProducerRecord();
+//                    log.error("Couldn't send message to approval system, the record key is "
+//                            + failedProducerRecord.key()
+//                            + ", value: " + failedProducerRecord.value());
+//                }
+//        );
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW,

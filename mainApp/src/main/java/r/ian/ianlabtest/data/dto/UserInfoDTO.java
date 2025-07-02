@@ -1,5 +1,8 @@
 package r.ian.ianlabtest.data.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
@@ -8,9 +11,6 @@ import r.ian.ianlabtest.data.domain.Person;
 import r.ian.ianlabtest.data.domain.User;
 import r.ian.ianlabtest.sec.role.UserRole;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 /**

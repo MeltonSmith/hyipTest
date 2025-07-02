@@ -1,5 +1,6 @@
 package r.ian.ianlabtest.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 /**
  * @author Melton Smith
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MainPageController {
 
     @GetMapping
-    public String handle(@RequestParam(value = "error", defaultValue = "false") boolean loginError, Model model) {
+    public String handle(@RequestParam(value = "error", defaultValue = "false") boolean loginError, Model model, HttpSession session) {
         if (loginError){
             return "main";
         }
