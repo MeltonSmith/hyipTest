@@ -2,6 +2,7 @@ package r.ian.ianlabtest.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaHandler;
@@ -19,9 +20,8 @@ import r.ian.ianlabtest.sec.role.UserRole;
 @Slf4j
 @Service
 @Profile("kafka")
-@KafkaListener(topics = "#{'${spring.kafka.processedTopic}'}")
 @Transactional
-public class UserApprovalListener implements MessageListener<ConsumerRecord<String, String>>{
+public class UserApprovalListener {
 
     CustomUserDetailsManager customUserDetailsManager;
 
@@ -30,24 +30,47 @@ public class UserApprovalListener implements MessageListener<ConsumerRecord<Stri
         this.customUserDetailsManager = customUserDetailsManager;
     }
 
-    @KafkaHandler(isDefault = true)
+    @KafkaListener(topics = "#{'${spring.kafka.processedTopic}'}",
+            batch = "true")
     //TODO make transaction
-    public void listen(ConsumerRecord<String, String> record) {
-        String messageValue = record.value();
-        String messageKey = record.key();
+    public void listen(ConsumerRecords<String, String> records) {
 
-        log.debug(messageKey + " " + messageValue);
+        records.forEach(record -> {
+            String messageValue = record.value();
+            String messageKey = record.key();
 
-        User userById = customUserDetailsManager.getUserById(messageKey);
+            log.info(messageKey + " " + messageValue);
+        });
 
-        try{
-            UserRole takenRole = UserRole.valueOf(messageValue);
-            userById.setUserRole(takenRole);
-            customUserDetailsManager.updateUser(userById);
-        }
-        catch(IllegalArgumentException exception){
-            log.error("No status for the given role {}", messageValue);
-        }
+
+//        User userById = customUserDetailsManager.getUserById(messageKey);
+//
+//        try{
+//            UserRole takenRole = UserRole.valueOf(messageValue);
+//            userById.setUserRole(takenRole);
+//            customUserDetailsManager.updateUser(userById);
+//        }
+//        catch(IllegalArgumentException exception){
+//            log.error("No status for the given role {}", messageValue);
+//        }
     }
+
+//    public void listen(ConsumerRecord<String, String> record) {
+//        String messageValue = record.value();
+//        String messageKey = record.key();
+//
+//        log.debug(messageKey + " " + messageValue);
+//
+//        User userById = customUserDetailsManager.getUserById(messageKey);
+//
+//        try{
+//            UserRole takenRole = UserRole.valueOf(messageValue);
+//            userById.setUserRole(takenRole);
+//            customUserDetailsManager.updateUser(userById);
+//        }
+//        catch(IllegalArgumentException exception){
+//            log.error("No status for the given role {}", messageValue);
+//        }
+//    }
 
 }

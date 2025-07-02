@@ -2,7 +2,7 @@ spring:
 
   kafka:
 #    kafka on my macbook
-    bootstrap-servers: 'localhost:9094'
+    bootstrap-servers: 'eprupetw10aa:30903, eprupetw10aa:30448,  eprupetw10aa:30805'
     producer:
       client-id: mainAppProducer
 #      buffer-memory : 32000000 default ok
@@ -24,6 +24,7 @@ spring:
       enable-auto-commit: true
       client-id: mainAppConsumer
       group-id: hyip-group
+      max-poll-records: 50
 
     #topic to send users for approval
     approvalTopic: userForApproval

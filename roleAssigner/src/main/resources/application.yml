@@ -1,7 +1,7 @@
 spring:
 
   kafka:
-    bootstrap-servers: 'localhost:9094'
+    bootstrap-servers: 'eprupetw10aa:30903, eprupetw10aa:30448,  eprupetw10aa:30805'
     producer:
       properties:
         #        how long producer will block the thread

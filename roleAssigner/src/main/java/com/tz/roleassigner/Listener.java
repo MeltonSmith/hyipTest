@@ -20,7 +20,7 @@ import org.springframework.util.concurrent.ListenableFuture;
 @Slf4j
 @Service
 @KafkaListener(topics = "${spring.kafka.topicToListen}")
-public class Listener implements MessageListener <ConsumerRecord<String,String>>{
+public class Listener implements MessageListener<ConsumerRecord<String,String>>{
 
     @Autowired
     private final KafkaTemplate <String,String> kafkaTemplate;
